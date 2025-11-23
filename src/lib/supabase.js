@@ -1,7 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://vrfyjirddfdnwuffzqhb.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZnlqaXJkZGZkbnd1ZmZ6cWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MDYwNjMsImV4cCI6MjA3NTQ4MjA2M30.glgJwI2yIqUFG8ZtWJk2esxGdXw6nFp5eQ8aANbRAvE'
+// Use environment variables from Vercel, with fallback to hardcoded values for development
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://vrfyjirddfdnwuffzqhb.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZnlqaXJkZGZkbnd1ZmZ6cWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MDYwNjMsImV4cCI6MjA3NTQ4MjA2M30.glgJwI2yIqUFG8ZtWJk2esxGdXw6nFp5eQ8aANbRAvE'
+
+// Log for debugging (remove in production)
+if (import.meta.env.DEV) {
+  console.log('Supabase URL:', supabaseUrl)
+  console.log('Supabase Anon Key exists:', !!supabaseAnonKey)
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
