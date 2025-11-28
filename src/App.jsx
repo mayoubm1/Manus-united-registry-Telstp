@@ -1,10 +1,10 @@
 import React from 'react';
-import { AuthWrapper } from './components/AuthWrapper';
+import { AuthWrapperEnhanced } from './components/AuthWrapperEnhanced';
 
 function App() {
   return (
     <div className="App">
-      <AuthWrapper />
+      <AuthWrapperEnhanced />
     </div>
   );
 }
