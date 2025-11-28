@@ -55,6 +55,10 @@ export function AuthWrapperEnhanced() {
     setError('')
 
     try {
+      console.log('Starting sign-up process...')
+      console.log('Supabase client:', supabase)
+      console.log('Form data:', formData)
+      
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -67,14 +71,22 @@ export function AuthWrapperEnhanced() {
         }
       })
 
-      if (error) throw error
+      console.log('Sign-up response:', { data, error })
+
+      if (error) {
+        console.error('Sign-up error:', error)
+        throw error
+      }
 
       if (data.user) {
         // User created successfully
         console.log('User created:', data.user)
+        setError('') // Clear any previous errors
       }
     } catch (error) {
-      setError(error.message)
+      console.error('Caught error:', error)
+      const errorMessage = error?.message || error?.toString() || 'An unknown error occurred'
+      setError(errorMessage)
     } finally {
       setAuthLoading(false)
     }
@@ -86,13 +98,20 @@ export function AuthWrapperEnhanced() {
     setError('')
 
     try {
+      console.log('Starting sign-in process...')
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
       })
-      if (error) throw error
+      console.log('Sign-in response:', { data, error })
+      if (error) {
+        console.error('Sign-in error:', error)
+        throw error
+      }
     } catch (error) {
-      setError(error.message)
+      console.error('Caught error:', error)
+      const errorMessage = error?.message || error?.toString() || 'An unknown error occurred'
+      setError(errorMessage)
     } finally {
       setAuthLoading(false)
     }
@@ -131,9 +150,9 @@ export function AuthWrapperEnhanced() {
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
         </div>
 
-        <div className="max-w-md w-full relative z-10">
+        <div className="w-full max-w-2xl relative z-10 px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 px-4">
             <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/50 border-2 border-amber-400">
               <span className="text-2xl">🔺</span>
             </div>
@@ -149,7 +168,7 @@ export function AuthWrapperEnhanced() {
           </div>
 
           {/* Features Preview with ARWES-style frames */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 px-4">
             <div className="text-center p-3 bg-gradient-to-br from-amber-500/20 to-amber-600/10 rounded-lg border border-amber-500/30 hover:border-amber-400/50 transition-all">
               <Brain className="w-6 h-6 text-amber-400 mx-auto mb-2" />
               <p className="text-xs text-amber-200">AI Companions</p>
@@ -165,7 +184,7 @@ export function AuthWrapperEnhanced() {
           </div>
 
           {/* Auth Forms with enhanced styling */}
-          <div className="border-2 border-amber-500/30 rounded-lg shadow-2xl shadow-amber-500/20 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-md overflow-hidden">
+          <div className="border-2 border-amber-500/30 rounded-lg shadow-2xl shadow-amber-500/20 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-md overflow-hidden mx-4 sm:mx-0">
             <div className="bg-gradient-to-r from-amber-600/20 to-blue-600/20 border-b border-amber-500/30 px-6 py-4">
               <h2 className="text-xl font-bold text-amber-300">Join the Future of Education</h2>
               <p className="text-sm text-amber-200/70 mt-1">
@@ -385,7 +404,7 @@ export function AuthWrapperEnhanced() {
           </div>
 
           {/* Footer */}
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 px-4">
             <p className="text-xs text-amber-300/70">
               &copy; 2025 TAWASOL Egypt Life Science Technology Park
             </p>
